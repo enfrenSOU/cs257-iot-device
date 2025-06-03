@@ -17,7 +17,13 @@ public:
                         brewStrength("medium"), cupsRequested(1) {}
     
     void fillWater(int amount) {
-        waterLevel += amount;
+        if (waterLevel + amount > 1000) {
+            int overflow = waterLevel + amount - 1000;
+            std::cout << "Too much water!  You have exceeded the limit by " << overflow << " mL" << std::endl;
+            waterLevel = 1000;
+        } else {
+            waterLevel += amount;
+        }
         std::cout << "Water level: " << waterLevel << " mL" << std::endl;
     }
     
@@ -87,7 +93,7 @@ int main() {
     myCoffee.displayStatus();
     
     // Try to overfill
-    myCoffee.fillWater(600);  // Tank capacity is 1000mL
+    myCoffee.fillWater(980);  // Tank capacity is 1000mL
     myCoffee.displayStatus();
     
     return 0;
